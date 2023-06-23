@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "red apple",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "gpio": "^0.2.10",
+    "node-dht-sensor": "^0.4.3"
+  }
 }

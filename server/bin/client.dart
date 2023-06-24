@@ -4,7 +4,7 @@ import 'package:protos/protos.dart';
 
 Future<void> main() async {
   ClientChannel? channel;
-  CryptoServiceClient? client;
+  ConsensusServiceClient? client;
   //Create new keys
 
   // const newAccountPrivateKey = newAccountPrivateKey.generateED25519();
@@ -12,41 +12,34 @@ Future<void> main() async {
   // final service = Client.forMainnet();
   // final server = grpc.Server([service]);
 
-  channel = ClientChannel('0.testnet.hedera.com',
-      port: 50211,
+  channel = ClientChannel('testnet.mirrornode.hedera.com',
+      port: 443,
       options: const ChannelOptions(
         credentials: ChannelCredentials.secure(),
       ));
 
-  final accountNum = Int64(14182885);
+  final topicNum = Int64(14978148);
+  final shardNum = Int64(0);
+  final realmNum = Int64(0);
 
-  final accountID = AccountID(accountNum: accountNum);
+  // final accountID = AccountID(accountNum: accountNum);
 
-  client = CryptoServiceClient(channel);
-
-
-client.getTransactionReceipts(request)
-
+  client = ConsensusServiceClient(channel);
 
   final queryHeader = QueryHeader(
     responseType: ResponseType.COST_ANSWER,
   );
 
-  final query1 = CryptoGetInfoQuery(accountID: accountID, header: queryHeader);
+  // final query1 = CryptoGetInfoQuery(accountID: accountID, header: queryHeader);
 
-  final query =
-      Query(cryptoGetInfo: query1); // Replace with your actual Query object
-//
-  try {
-    final response = await client.cryptoGetBalance(query);
+  final finalQuery =
+      ConsensusGetTopicInfoQuery(topicID: TopicID(topicNum: topicNum));
 
-    // Handle the response here
-    print(response);
-  } catch (error) {
-    // Handle any error that occurs during the RPC call
-    print('Error: $error');
-  } finally {
-    // Close the channel after the RPC call is complete
-    await channel.shutdown();
-  }
+  final query = Query(consensusGetTopicInfo: finalQuery);
+
+  print('awaiting');
+
+  final response = client.getTopicInfo(query).asStream().listen((event) {
+    print('event: event');
+  });
 }

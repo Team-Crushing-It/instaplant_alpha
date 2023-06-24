@@ -8,10 +8,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
   final authenticationRepository = AuthenticationRepository();
-  await authenticationRepository.user.first;
+  // await authenticationRepository.user.first;
 
-  runApp(App(authenticationRepository: authenticationRepository));
+  runApp(
+    App(
+      authenticationRepository: authenticationRepository,
+    ),
+  );
 }

@@ -9,16 +9,20 @@ class PlantService extends PlantServiceBase {
   final PlantServiceBloc bloc = PlantServiceBloc();
 
   @override
-  Stream<Plant> getPlants(grpc.ServiceCall call, Empty request) async* {
+  Stream<PlantList> getPlants(grpc.ServiceCall call, Empty request) async* {
     print('getPlants request received');
 
-    bloc.add(GetPlantsEvent());
+    // Yield the initial list of plants
+    yield PlantList()..plants.addAll(bloc.state.plants);
 
-    yield* Stream.fromIterable(
-        bloc.state.plants); // Yield all the plants in the initial state
+    // Listen to updates from the bloc stream
+    await for (final state in bloc.stream) {
+      // Create a new PlantList with the updated plant list
+      final plantList = PlantList()..plants.addAll(state.plants);
 
-    yield* bloc.stream
-        .asyncExpand((state) => Stream.fromIterable(state.plants));
+      // Yield the updated plant list
+      yield plantList;
+    }
   }
 
   @override

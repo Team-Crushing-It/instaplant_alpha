@@ -14,10 +14,10 @@ import 'instaplant.pb.dart' as $0;
 export 'instaplant.pb.dart';
 
 class PlantServiceClient extends $grpc.Client {
-  static final _$getPlants = $grpc.ClientMethod<$0.Empty, $0.Plant>(
+  static final _$getPlants = $grpc.ClientMethod<$0.Empty, $0.PlantList>(
       '/PlantService/getPlants',
       ($0.Empty value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Plant.fromBuffer(value));
+      ($core.List<$core.int> value) => $0.PlantList.fromBuffer(value));
   static final _$addPlant = $grpc.ClientMethod<$0.Plant, $0.AddResponse>(
       '/PlantService/addPlant',
       ($0.Plant value) => value.writeToBuffer(),
@@ -38,7 +38,7 @@ class PlantServiceClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.Plant> getPlants($0.Empty request,
+  $grpc.ResponseStream<$0.PlantList> getPlants($0.Empty request,
       {$grpc.CallOptions? options}) {
     return $createStreamingCall(
         _$getPlants, $async.Stream.fromIterable([request]),
@@ -65,13 +65,13 @@ abstract class PlantServiceBase extends $grpc.Service {
   $core.String get $name => 'PlantService';
 
   PlantServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.Plant>(
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.PlantList>(
         'getPlants',
         getPlants_Pre,
         false,
         true,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
-        ($0.Plant value) => value.writeToBuffer()));
+        ($0.PlantList value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Plant, $0.AddResponse>(
         'addPlant',
         addPlant_Pre,
@@ -95,7 +95,7 @@ abstract class PlantServiceBase extends $grpc.Service {
         ($0.PurchaseResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.Plant> getPlants_Pre(
+  $async.Stream<$0.PlantList> getPlants_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
     yield* getPlants(call, await request);
   }
@@ -115,7 +115,8 @@ abstract class PlantServiceBase extends $grpc.Service {
     return purchase(call, await request);
   }
 
-  $async.Stream<$0.Plant> getPlants($grpc.ServiceCall call, $0.Empty request);
+  $async.Stream<$0.PlantList> getPlants(
+      $grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.AddResponse> addPlant(
       $grpc.ServiceCall call, $0.Plant request);
   $async.Future<$0.UpdateResponse> updatePlant(

@@ -8,7 +8,7 @@ part 'catalog_state.dart';
 
 class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
   CatalogBloc({required this.plantRepository})
-      : super(CatalogState([], CatalogStatus.loading)) {
+      : super(CatalogState(PlantList(plants: []), CatalogStatus.loading)) {
     on<CatalogStarted>(_onStarted);
   }
 
@@ -18,14 +18,11 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     CatalogStarted event,
     Emitter<CatalogState> emit,
   ) async {
-    await emit.forEach<Plant>(plantRepository.getPlants(), onData: (data) {
-      final output = state.plants.map((e) {
-        return e;
-      }).toList();
-      output.add(data);
-      print(output);
+    await emit.forEach<PlantList>(plantRepository.getPlants(), onData: (data) {
+      final output = data;
 
-      emit(state.copyWith(plants: output, status: CatalogStatus.loaded));
+      emit(state.copyWith(plantList: output, status: CatalogStatus.loaded));
+
       return state;
     });
   }

@@ -26,9 +26,9 @@ class CatalogPage extends StatelessWidget {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      return PlantListItem(plant: state.plants[index]);
+                      return PlantListItem(plant: state.plantList.plants[index]);
                     },
-                    childCount: state.plants.length,
+                    childCount: state.plantList.plants.length,
                   ),
                 );
               }

@@ -39,6 +39,16 @@ const Plant$json = const {
 
 /// Descriptor for `Plant`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List plantDescriptor = $convert.base64Decode('CgVQbGFudBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIYCgdvd25lcklkGAMgASgJUgdvd25lcklkEiQKBnN0YXR1cxgEIAEoDjIMLnBsYW50U3RhdHVzUgZzdGF0dXMSGgoIY2F0ZWdvcnkYBSABKAlSCGNhdGVnb3J5EiUKBmxhdGVzdBgGIAEoCzINLlNlbnNvclVwZGF0ZVIGbGF0ZXN0EicKB2hpc3RvcnkYByADKAsyDS5TZW5zb3JVcGRhdGVSB2hpc3RvcnkSFAoFcHJpY2UYCCABKAFSBXByaWNl');
+@$core.Deprecated('Use plantListDescriptor instead')
+const PlantList$json = const {
+  '1': 'PlantList',
+  '2': const [
+    const {'1': 'plants', '3': 1, '4': 3, '5': 11, '6': '.Plant', '10': 'plants'},
+  ],
+};
+
+/// Descriptor for `PlantList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List plantListDescriptor = $convert.base64Decode('CglQbGFudExpc3QSHgoGcGxhbnRzGAEgAygLMgYuUGxhbnRSBnBsYW50cw==');
 @$core.Deprecated('Use sensorUpdateDescriptor instead')
 const SensorUpdate$json = const {
   '1': 'SensorUpdate',

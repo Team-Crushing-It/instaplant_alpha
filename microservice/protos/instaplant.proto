@@ -8,6 +8,7 @@ message Plant {
   string category = 5;
   SensorUpdate latest = 6;
   repeated SensorUpdate history = 7;
+  double price = 8;
 }
 
 enum plantStatus{
@@ -16,7 +17,7 @@ enum plantStatus{
     HARVESTING = 2;
     IN_TRANSIT= 3;
     DELIVERED = 4;
-   }
+}
 
 message SensorUpdate {
   int32 sensorID = 1;

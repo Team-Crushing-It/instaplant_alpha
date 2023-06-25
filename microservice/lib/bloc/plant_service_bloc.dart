@@ -27,6 +27,7 @@ class PlantServiceBloc extends Bloc<PlantServiceEvent, PlantServiceState> {
     final output = state.plants.map((e) => e).toList();
 
     output.add(event.plant);
+    print(output);
 
     emit(state.copyWith(plants: output));
   }

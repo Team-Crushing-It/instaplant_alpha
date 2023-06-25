@@ -8,21 +8,8 @@
 import 'dart:core' as $core;
 import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-@$core.Deprecated('Use plantDescriptor instead')
-const Plant$json = const {
-  '1': 'Plant',
-  '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'current', '3': 3, '4': 1, '5': 11, '6': '.SensorUpdate', '10': 'current'},
-    const {'1': 'history', '3': 4, '4': 3, '5': 11, '6': '.SensorUpdate', '10': 'history'},
-    const {'1': 'daysTillHarvest', '3': 5, '4': 1, '5': 5, '10': 'daysTillHarvest'},
-  ],
-  '4': const [Plant_plantStatus$json],
-};
-
-@$core.Deprecated('Use plantDescriptor instead')
-const Plant_plantStatus$json = const {
+@$core.Deprecated('Use plantStatusDescriptor instead')
+const plantStatus$json = const {
   '1': 'plantStatus',
   '2': const [
     const {'1': 'GROWING', '2': 0},
@@ -33,8 +20,34 @@ const Plant_plantStatus$json = const {
   ],
 };
 
+/// Descriptor for `plantStatus`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List plantStatusDescriptor = $convert.base64Decode('CgtwbGFudFN0YXR1cxILCgdHUk9XSU5HEAASDAoIRlJVSVRJTkcQARIOCgpIQVJWRVNUSU5HEAISDgoKSU5fVFJBTlNJVBADEg0KCURFTElWRVJFRBAE');
+@$core.Deprecated('Use plantDescriptor instead')
+const Plant$json = const {
+  '1': 'Plant',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'ownerId', '3': 3, '4': 1, '5': 9, '10': 'ownerId'},
+    const {'1': 'status', '3': 4, '4': 1, '5': 14, '6': '.plantStatus', '10': 'status'},
+    const {'1': 'daysTillHarvest', '3': 5, '4': 1, '5': 5, '10': 'daysTillHarvest'},
+    const {'1': 'latest', '3': 6, '4': 1, '5': 11, '6': '.SensorUpdate', '10': 'latest'},
+    const {'1': 'history', '3': 7, '4': 3, '5': 11, '6': '.SensorUpdate', '10': 'history'},
+  ],
+};
+
 /// Descriptor for `Plant`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List plantDescriptor = $convert.base64Decode('CgVQbGFudBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRInCgdjdXJyZW50GAMgASgLMg0uU2Vuc29yVXBkYXRlUgdjdXJyZW50EicKB2hpc3RvcnkYBCADKAsyDS5TZW5zb3JVcGRhdGVSB2hpc3RvcnkSKAoPZGF5c1RpbGxIYXJ2ZXN0GAUgASgFUg9kYXlzVGlsbEhhcnZlc3QiVwoLcGxhbnRTdGF0dXMSCwoHR1JPV0lORxAAEgwKCEZSVUlUSU5HEAESDgoKSEFSVkVTVElORxACEg4KCklOX1RSQU5TSVQQAxINCglERUxJVkVSRUQQBA==');
+final $typed_data.Uint8List plantDescriptor = $convert.base64Decode('CgVQbGFudBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIYCgdvd25lcklkGAMgASgJUgdvd25lcklkEiQKBnN0YXR1cxgEIAEoDjIMLnBsYW50U3RhdHVzUgZzdGF0dXMSKAoPZGF5c1RpbGxIYXJ2ZXN0GAUgASgFUg9kYXlzVGlsbEhhcnZlc3QSJQoGbGF0ZXN0GAYgASgLMg0uU2Vuc29yVXBkYXRlUgZsYXRlc3QSJwoHaGlzdG9yeRgHIAMoCzINLlNlbnNvclVwZGF0ZVIHaGlzdG9yeQ==');
+@$core.Deprecated('Use plantListDescriptor instead')
+const PlantList$json = const {
+  '1': 'PlantList',
+  '2': const [
+    const {'1': 'plants', '3': 1, '4': 3, '5': 11, '6': '.Plant', '10': 'plants'},
+  ],
+};
+
+/// Descriptor for `PlantList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List plantListDescriptor = $convert.base64Decode('CglQbGFudExpc3QSHgoGcGxhbnRzGAEgAygLMgYuUGxhbnRSBnBsYW50cw==');
 @$core.Deprecated('Use sensorUpdateDescriptor instead')
 const SensorUpdate$json = const {
   '1': 'SensorUpdate',
@@ -62,6 +75,16 @@ const ShoppingCart$json = const {
 
 /// Descriptor for `ShoppingCart`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List shoppingCartDescriptor = $convert.base64Decode('CgxTaG9wcGluZ0NhcnQSDgoCaWQYASABKAlSAmlkEhYKBnVzZXJJZBgCIAEoCVIGdXNlcklkEh4KCnRvdGFsUHJpY2UYAyABKAJSCnRvdGFsUHJpY2USHAoFaXRlbXMYCCADKAsyBi5QbGFudFIFaXRlbXM=');
+@$core.Deprecated('Use addResponseDescriptor instead')
+const AddResponse$json = const {
+  '1': 'AddResponse',
+  '2': const [
+    const {'1': 'response', '3': 1, '4': 1, '5': 9, '10': 'response'},
+  ],
+};
+
+/// Descriptor for `AddResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List addResponseDescriptor = $convert.base64Decode('CgtBZGRSZXNwb25zZRIaCghyZXNwb25zZRgBIAEoCVIIcmVzcG9uc2U=');
 @$core.Deprecated('Use updateResponseDescriptor instead')
 const UpdateResponse$json = const {
   '1': 'UpdateResponse',

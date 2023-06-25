@@ -9,14 +9,14 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class Plant_plantStatus extends $pb.ProtobufEnum {
-  static const Plant_plantStatus GROWING = Plant_plantStatus._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GROWING');
-  static const Plant_plantStatus FRUITING = Plant_plantStatus._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FRUITING');
-  static const Plant_plantStatus HARVESTING = Plant_plantStatus._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HARVESTING');
-  static const Plant_plantStatus IN_TRANSIT = Plant_plantStatus._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IN_TRANSIT');
-  static const Plant_plantStatus DELIVERED = Plant_plantStatus._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DELIVERED');
+class plantStatus extends $pb.ProtobufEnum {
+  static const plantStatus GROWING = plantStatus._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GROWING');
+  static const plantStatus FRUITING = plantStatus._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FRUITING');
+  static const plantStatus HARVESTING = plantStatus._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'HARVESTING');
+  static const plantStatus IN_TRANSIT = plantStatus._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IN_TRANSIT');
+  static const plantStatus DELIVERED = plantStatus._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'DELIVERED');
 
-  static const $core.List<Plant_plantStatus> values = <Plant_plantStatus> [
+  static const $core.List<plantStatus> values = <plantStatus> [
     GROWING,
     FRUITING,
     HARVESTING,
@@ -24,9 +24,9 @@ class Plant_plantStatus extends $pb.ProtobufEnum {
     DELIVERED,
   ];
 
-  static final $core.Map<$core.int, Plant_plantStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static Plant_plantStatus? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, plantStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static plantStatus? valueOf($core.int value) => _byValue[value];
 
-  const Plant_plantStatus._($core.int v, $core.String n) : super(v, n);
+  const plantStatus._($core.int v, $core.String n) : super(v, n);
 }
 

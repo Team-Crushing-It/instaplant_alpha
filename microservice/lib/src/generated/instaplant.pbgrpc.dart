@@ -13,23 +13,27 @@ import 'package:grpc/service_api.dart' as $grpc;
 import 'instaplant.pb.dart' as $0;
 export 'instaplant.pb.dart';
 
-class InstaplantServiceClient extends $grpc.Client {
+class PlantServiceClient extends $grpc.Client {
   static final _$getPlants = $grpc.ClientMethod<$0.Empty, $0.Plant>(
-      '/InstaplantService/getPlants',
+      '/PlantService/getPlants',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Plant.fromBuffer(value));
+  static final _$addPlant = $grpc.ClientMethod<$0.Plant, $0.AddResponse>(
+      '/PlantService/addPlant',
+      ($0.Plant value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.AddResponse.fromBuffer(value));
   static final _$updatePlant = $grpc.ClientMethod<$0.Plant, $0.UpdateResponse>(
-      '/InstaplantService/updatePlant',
+      '/PlantService/updatePlant',
       ($0.Plant value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.UpdateResponse.fromBuffer(value));
   static final _$purchase =
       $grpc.ClientMethod<$0.ShoppingCart, $0.PurchaseResponse>(
-          '/InstaplantService/purchase',
+          '/PlantService/purchase',
           ($0.ShoppingCart value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.PurchaseResponse.fromBuffer(value));
 
-  InstaplantServiceClient($grpc.ClientChannel channel,
+  PlantServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options, interceptors: interceptors);
@@ -39,6 +43,11 @@ class InstaplantServiceClient extends $grpc.Client {
     return $createStreamingCall(
         _$getPlants, $async.Stream.fromIterable([request]),
         options: options);
+  }
+
+  $grpc.ResponseFuture<$0.AddResponse> addPlant($0.Plant request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$addPlant, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.UpdateResponse> updatePlant($0.Plant request,
@@ -52,10 +61,10 @@ class InstaplantServiceClient extends $grpc.Client {
   }
 }
 
-abstract class InstaplantServiceBase extends $grpc.Service {
-  $core.String get $name => 'InstaplantService';
+abstract class PlantServiceBase extends $grpc.Service {
+  $core.String get $name => 'PlantService';
 
-  InstaplantServiceBase() {
+  PlantServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.Empty, $0.Plant>(
         'getPlants',
         getPlants_Pre,
@@ -63,6 +72,13 @@ abstract class InstaplantServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.Plant value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Plant, $0.AddResponse>(
+        'addPlant',
+        addPlant_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.Plant.fromBuffer(value),
+        ($0.AddResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Plant, $0.UpdateResponse>(
         'updatePlant',
         updatePlant_Pre,
@@ -84,6 +100,11 @@ abstract class InstaplantServiceBase extends $grpc.Service {
     yield* getPlants(call, await request);
   }
 
+  $async.Future<$0.AddResponse> addPlant_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.Plant> request) async {
+    return addPlant(call, await request);
+  }
+
   $async.Future<$0.UpdateResponse> updatePlant_Pre(
       $grpc.ServiceCall call, $async.Future<$0.Plant> request) async {
     return updatePlant(call, await request);
@@ -95,6 +116,8 @@ abstract class InstaplantServiceBase extends $grpc.Service {
   }
 
   $async.Stream<$0.Plant> getPlants($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.AddResponse> addPlant(
+      $grpc.ServiceCall call, $0.Plant request);
   $async.Future<$0.UpdateResponse> updatePlant(
       $grpc.ServiceCall call, $0.Plant request);
   $async.Future<$0.PurchaseResponse> purchase(

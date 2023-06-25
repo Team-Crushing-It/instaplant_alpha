@@ -1,19 +1,25 @@
 syntax = "proto3";
 
 message Plant {
- string id = 1;
+  string id = 1;
   string name = 2;
-  SensorUpdate current = 3;
-  repeated SensorUpdate history = 4;
+  string ownerId = 3;
+  plantStatus status  = 4;
   int32 daysTillHarvest = 5;
-  enum plantStatus{
+  SensorUpdate latest = 6;
+  repeated SensorUpdate history = 7;
+}
+
+message PlantList {
+  repeated Plant plants = 1;
+}
+enum plantStatus{
     GROWING = 0;
     FRUITING = 1;
     HARVESTING = 2;
     IN_TRANSIT= 3;
     DELIVERED = 4;
    }
-}
 
 message SensorUpdate {
   int32 sensorID = 1;
@@ -30,6 +36,10 @@ message ShoppingCart {
   repeated Plant items = 8;
   }
 
+  message AddResponse {
+    string response = 1;
+  }
+
   message UpdateResponse {
     string response = 1;
   }
@@ -39,8 +49,9 @@ message ShoppingCart {
   }
 message Empty {}
 
-service InstaplantService {
+service PlantService {
     rpc getPlants(Empty) returns (stream Plant){}
+    rpc addPlant(Plant) returns (AddResponse) {}
     rpc updatePlant(Plant) returns (UpdateResponse) {}
     rpc purchase(ShoppingCart) returns (PurchaseResponse) {}
 

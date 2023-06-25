@@ -14,11 +14,7 @@ class CatalogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            const Text('Instaplant'),
-          ],
-        ),
+        title: InstaPlantLogo(),
         leading: IconButton(
           icon: const Icon(Icons.person),
           onPressed: () {},
@@ -277,6 +273,26 @@ class PlantCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+// widget with sprout icon and then text: instaplant, plant part is green, insta is normal text color.
+class InstaPlantLogo extends StatelessWidget {
+  const InstaPlantLogo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'InstaPlant',
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ],
     );
   }
 }

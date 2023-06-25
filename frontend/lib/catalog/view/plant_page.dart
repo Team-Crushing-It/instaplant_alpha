@@ -11,14 +11,17 @@ class PlantPageArguments {
 class PlantPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final PlantPageArguments args = ModalRoute.of(context)!.settings.arguments as PlantPageArguments;
+    final PlantPageArguments args =
+        ModalRoute.of(context)!.settings.arguments as PlantPageArguments;
     final plant = args.plant;
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: <Widget>[
             ListView(
-              padding: EdgeInsets.only(bottom: 80.0), // Make space for the bottom bar
+              padding: EdgeInsets.only(
+                bottom: 80.0,
+              ),
               children: <Widget>[
                 Container(
                   child: Stack(
@@ -26,22 +29,28 @@ class PlantPage extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.arrow_back),
                         onPressed: () {
-                          Navigator.pop(context); // Go back to the previous page
+                          Navigator.pop(
+                            context,
+                          );
                         },
                       ),
                       Center(
                         child: Padding(
                           padding: EdgeInsets.only(top: 8.0),
-                          child: Text('Details', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            'Details',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.5, // Take half of the screen
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: Image.network(
-                    plant.currentSensorUpdate.currentPictureUrl, // Replace with your image link
+                    plant.latest.pictureUrl,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -50,13 +59,34 @@ class PlantPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(plant.name, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)), // Replace with your plant title
+                      Text(
+                        plant.name,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(height: 16),
-                      Text(plant.description), // Replace with your plant description
-                      SizedBox(height: 16),
-                      Text('Temperature: ${plant.currentSensorUpdate.currentTemperature}', style: TextStyle(fontWeight: FontWeight.bold)), // Replace with your data
-                      Text('Humidity: ${plant.currentSensorUpdate.currentTemperature}', style: TextStyle(fontWeight: FontWeight.bold)), // Replace with your data
-                      Text('Days to harvest: ${plant.daysTillHarvest}', style: TextStyle(fontWeight: FontWeight.bold)), // Replace with your data
+                      Text(
+                          'This is the description of the plant. It is a very nice plant.'),
+                      SizedBox(height: 32),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PlantParameter(
+                            label: 'Temperature',
+                            value: '${plant.latest.temperature} °C',
+                          ),
+                          PlantParameter(
+                            label: 'Humidity',
+                            value: '${(plant.latest.humidity * 100).toInt()}%',
+                          ),
+                          PlantParameter(
+                            label: 'Days till harvest',
+                            value: '3',
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -72,7 +102,19 @@ class PlantPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text('\$${plant.price}', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)), // Replace with your plant price
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Price'),
+                        Text(
+                          '\$${plant.price}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ), // Replace with your plant price
                     ElevatedButton(
                       child: Text('Add to Cart'),
                       onPressed: () {
@@ -86,6 +128,35 @@ class PlantPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class PlantParameter extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const PlantParameter({
+    Key? key,
+    required this.label,
+    required this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+        ),
+        SizedBox(height: 10),
+        Text(
+          value,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }

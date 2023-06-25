@@ -175,8 +175,8 @@ class CategoryList extends StatelessWidget {
                 id: items[index].id,
                 name: items[index].name,
                 price: items[index].price,
-                currentSensorUpdate: items[index].currentSensorUpdate,
-                daysTillHarvest: items[index].daysTillHarvest,
+                currentSensorUpdate: items[index].latest,
+                daysTillHarvest: 3,
               );
             },
           ),

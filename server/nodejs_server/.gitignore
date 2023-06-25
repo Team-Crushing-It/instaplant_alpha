@@ -1,4 +1,4 @@
-/node_moduues
+node_modules/
 .env
 src/env.js
 env.js

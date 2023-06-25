@@ -12,6 +12,7 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc({required this.plantRepository}) : super(CartLoading()) {
     on<CartStarted>(_onStarted);
+    on<CartPurchaseEvent>(_onPurchase);
     on<CartItemAdded>(_onItemAdded);
     on<CartItemRemoved>(_onItemRemoved);
   }
@@ -19,6 +20,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final PlantRepository plantRepository;
 
   Future<void> _onStarted(CartStarted event, Emitter<CartState> emit) async {
+    emit(CartLoading());
+    try {
+      final items = [];
+      emit(CartLoaded(cart: Cart(items: [...items])));
+    } catch (_) {
+      emit(CartError());
+    }
+  }
+
+  Future<void> _onPurchase(CartPurchaseEvent event, Emitter<CartState> emit) async {
     emit(CartLoading());
     try {
       final items = [];

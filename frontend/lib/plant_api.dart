@@ -26,4 +26,10 @@ class PlantApi {
     final addResponse = await _client.addPlant(plant);
     return addResponse;
   }
+
+    /// Function for adding purchasing
+  Future<PurchaseResponse> purchase(ShoppingCart cart) async {
+    final purchaseResponse = await _client.purchase(cart);
+    return purchaseResponse;
+  }
 }

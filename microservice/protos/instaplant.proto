@@ -10,9 +10,6 @@ message Plant {
   repeated SensorUpdate history = 7;
 }
 
-message PlantList {
-  repeated Plant plants = 1;
-}
 enum plantStatus{
     GROWING = 0;
     FRUITING = 1;
@@ -54,7 +51,6 @@ service PlantService {
     rpc addPlant(Plant) returns (AddResponse) {}
     rpc updatePlant(Plant) returns (UpdateResponse) {}
     rpc purchase(ShoppingCart) returns (PurchaseResponse) {}
-
 } 
 
 

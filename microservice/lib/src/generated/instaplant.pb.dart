@@ -140,47 +140,6 @@ class Plant extends $pb.GeneratedMessage {
   $core.List<SensorUpdate> get history => $_getList(6);
 }
 
-class PlantList extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PlantList', createEmptyInstance: create)
-    ..pc<Plant>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'plants', $pb.PbFieldType.PM, subBuilder: Plant.create)
-    ..hasRequiredFields = false
-  ;
-
-  PlantList._() : super();
-  factory PlantList({
-    $core.Iterable<Plant>? plants,
-  }) {
-    final _result = create();
-    if (plants != null) {
-      _result.plants.addAll(plants);
-    }
-    return _result;
-  }
-  factory PlantList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PlantList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  PlantList clone() => PlantList()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  PlantList copyWith(void Function(PlantList) updates) => super.copyWith((message) => updates(message as PlantList)) as PlantList; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static PlantList create() => PlantList._();
-  PlantList createEmptyInstance() => create();
-  static $pb.PbList<PlantList> createRepeated() => $pb.PbList<PlantList>();
-  @$core.pragma('dart2js:noInline')
-  static PlantList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PlantList>(create);
-  static PlantList? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<Plant> get plants => $_getList(0);
-}
-
 class SensorUpdate extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SensorUpdate', createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sensorID', $pb.PbFieldType.O3, protoName: 'sensorID')

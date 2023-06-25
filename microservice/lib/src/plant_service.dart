@@ -22,12 +22,12 @@ class PlantService extends PlantServiceBase {
   }
 
   @override
-  Future<AddResponse> addPlant(grpc.ServiceCall call, Plant request) async {
+  Future<AddResponse> addPlant(grpc.ServiceCall call, Plant plant) async {
     print('addPlant request received');
 
-    print(request.id);
+    print(plant.id);
 
-    bloc.add(AddPlantEvent(request));
+    bloc.add(AddPlantEvent(plant));
 
     return AddResponse()..response = 'added';
   }

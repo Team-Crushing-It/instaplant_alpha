@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/cart/cart.dart';
 import 'package:frontend/catalog/catalog.dart';
+import 'package:frontend/catalog/view/plant_page.dart';
 import 'package:frontend/shopping_repository.dart';
 
 class App extends StatelessWidget {
@@ -30,6 +31,9 @@ class App extends StatelessWidget {
         routes: {
           '/': (_) => const CatalogPage(),
           '/cart': (_) => const CartPage(),
+          '/plant': (_) {
+            return PlantPage();
+          },
         },
       ),
     );

@@ -33,11 +33,12 @@ const Plant$json = const {
     const {'1': 'category', '3': 5, '4': 1, '5': 9, '10': 'category'},
     const {'1': 'latest', '3': 6, '4': 1, '5': 11, '6': '.SensorUpdate', '10': 'latest'},
     const {'1': 'history', '3': 7, '4': 3, '5': 11, '6': '.SensorUpdate', '10': 'history'},
+    const {'1': 'price', '3': 8, '4': 1, '5': 1, '10': 'price'},
   ],
 };
 
 /// Descriptor for `Plant`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List plantDescriptor = $convert.base64Decode('CgVQbGFudBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIYCgdvd25lcklkGAMgASgJUgdvd25lcklkEiQKBnN0YXR1cxgEIAEoDjIMLnBsYW50U3RhdHVzUgZzdGF0dXMSGgoIY2F0ZWdvcnkYBSABKAlSCGNhdGVnb3J5EiUKBmxhdGVzdBgGIAEoCzINLlNlbnNvclVwZGF0ZVIGbGF0ZXN0EicKB2hpc3RvcnkYByADKAsyDS5TZW5zb3JVcGRhdGVSB2hpc3Rvcnk=');
+final $typed_data.Uint8List plantDescriptor = $convert.base64Decode('CgVQbGFudBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIYCgdvd25lcklkGAMgASgJUgdvd25lcklkEiQKBnN0YXR1cxgEIAEoDjIMLnBsYW50U3RhdHVzUgZzdGF0dXMSGgoIY2F0ZWdvcnkYBSABKAlSCGNhdGVnb3J5EiUKBmxhdGVzdBgGIAEoCzINLlNlbnNvclVwZGF0ZVIGbGF0ZXN0EicKB2hpc3RvcnkYByADKAsyDS5TZW5zb3JVcGRhdGVSB2hpc3RvcnkSFAoFcHJpY2UYCCABKAFSBXByaWNl');
 @$core.Deprecated('Use sensorUpdateDescriptor instead')
 const SensorUpdate$json = const {
   '1': 'SensorUpdate',

@@ -22,6 +22,7 @@ class Plant extends $pb.GeneratedMessage {
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'category')
     ..aOM<SensorUpdate>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'latest', subBuilder: SensorUpdate.create)
     ..pc<SensorUpdate>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'history', $pb.PbFieldType.PM, subBuilder: SensorUpdate.create)
+    ..a<$core.double>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'price', $pb.PbFieldType.OD)
     ..hasRequiredFields = false
   ;
 
@@ -34,6 +35,7 @@ class Plant extends $pb.GeneratedMessage {
     $core.String? category,
     SensorUpdate? latest,
     $core.Iterable<SensorUpdate>? history,
+    $core.double? price,
   }) {
     final _result = create();
     if (id != null) {
@@ -56,6 +58,9 @@ class Plant extends $pb.GeneratedMessage {
     }
     if (history != null) {
       _result.history.addAll(history);
+    }
+    if (price != null) {
+      _result.price = price;
     }
     return _result;
   }
@@ -138,6 +143,15 @@ class Plant extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.List<SensorUpdate> get history => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.double get price => $_getN(7);
+  @$pb.TagNumber(8)
+  set price($core.double v) { $_setDouble(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasPrice() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPrice() => clearField(8);
 }
 
 class SensorUpdate extends $pb.GeneratedMessage {

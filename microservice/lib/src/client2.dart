@@ -15,7 +15,18 @@ class Client2 {
     String now = DateTime.now().microsecondsSinceEpoch.toString();
 
     try {
-      final response = await client.addPlant(Plant(id: now));
+      final response = await client.addPlant(Plant(
+          id: now,
+          name: 'Main Mushr',
+          price: 99.99,
+          latest: SensorUpdate(
+            humidity: 0.8,
+            temperature: 21,
+            hydroSense: true,
+            pictureUrl:
+                'https://media.discordapp.net/attachments/1097344348045197466/1122371681936232528/IMG_9087.jpg?width=878&height=1170',
+            sensorID: 1,
+          )));
       print(response);
     } catch (e) {
       print('Error: $e');

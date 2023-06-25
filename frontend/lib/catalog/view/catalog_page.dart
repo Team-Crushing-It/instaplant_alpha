@@ -105,45 +105,22 @@ class CategorizedPlantList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = items.map((item) => item.category).toSet().toList();
+    final categoryToItems = Map.fromIterable(categories,
+        key: (category) => category,
+        value: (category) =>
+            items.where((item) => item.category == category).toList());
+
     return ListView.builder(
-      itemCount: categories.length,
+      itemCount: categoryToItems.length,
       itemBuilder: (context, index) {
         return CategoryList(
           category: categories[index],
-          items: items,
+          items: categories.contains(categories[index])
+              ? categoryToItems[categories[index]]!
+              : [],
         );
       },
-    );
-  }
-}
-
-class PlantListItem extends StatelessWidget {
-  final Plant plant;
-
-  PlantListItem({
-    required this.plant,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 300,
-      child: Card(
-        child: Column(
-          children: [
-            Text(plant.id),
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(4),
-            //   child: Image.network(
-            //     plant.latest.pictureUrl,
-            //     fit: BoxFit.cover,
-            //     height: 200,
-            //   ),
-            // ),
-          ],
-        ),
-      ),
     );
   }
 }

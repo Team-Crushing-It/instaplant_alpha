@@ -11,7 +11,7 @@ class PlantRepository {
   final PlantApi _plantApi;
 
   /// Get a stream plants
-  Stream<Plant> getPlants() {
+  Stream<PlantList> getPlants() {
     return _plantApi.getPlants();
   }
 

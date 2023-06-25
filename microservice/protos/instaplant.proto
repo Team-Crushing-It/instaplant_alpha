@@ -11,6 +11,10 @@ message Plant {
   double price = 8;
 }
 
+message PlantList {
+  repeated Plant plants = 1;
+}
+
 enum plantStatus{
     GROWING = 0;
     FRUITING = 1;
@@ -48,7 +52,7 @@ message ShoppingCart {
 message Empty {}
 
 service PlantService {
-    rpc getPlants(Empty) returns (stream Plant){}
+  rpc getPlants(Empty) returns (stream PlantList) {}
     rpc addPlant(Plant) returns (AddResponse) {}
     rpc updatePlant(Plant) returns (UpdateResponse) {}
     rpc purchase(ShoppingCart) returns (PurchaseResponse) {}

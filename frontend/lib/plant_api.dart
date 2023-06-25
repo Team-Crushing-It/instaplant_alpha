@@ -14,7 +14,7 @@ class PlantApi {
   final PlantServiceClient _client;
 
   /// function for subscribing to the server
-  Stream<Plant> getPlants() {
+  Stream<PlantList> getPlants() {
     print('getPlants');
     final subscribeRequest = Empty();
     final subscription = _client.getPlants(subscribeRequest);

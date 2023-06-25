@@ -3,20 +3,20 @@ part of 'catalog_bloc.dart';
 enum CatalogStatus { loading, loaded }
 
 class CatalogState extends Equatable {
-  const CatalogState(this.plants, this.status);
+  const CatalogState(this.plantList, this.status);
 
-  final List<Plant> plants;
+  final PlantList plantList;
   final CatalogStatus status;
 
   @override
-  List<Object> get props => [plants, status];
+  List<Object> get props => [plantList, status];
 
   CatalogState copyWith({
-    List<Plant>? plants,
+    PlantList? plantList,
     CatalogStatus? status,
   }) {
     return CatalogState(
-      plants ?? this.plants,
+      plantList ?? this.plantList,
       status ?? this.status,
     );
   }

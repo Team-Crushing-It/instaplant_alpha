@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:frontend/catalog/models/item.dart';
+import 'package:frontend/generated/instaplant.pb.dart';
 
 class Catalog extends Equatable {
   const Catalog({required this.plants});

@@ -2,25 +2,26 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:frontend/cart/cart.dart';
 import 'package:frontend/catalog/catalog.dart';
-import 'package:frontend/shopping_repository.dart';
+import 'package:frontend/generated/instaplant.pb.dart';
+import 'package:frontend/plant_repository.dart';
 import 'package:meta/meta.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc({required this.shoppingRepository}) : super(CartLoading()) {
+  CartBloc({required this.plantRepository}) : super(CartLoading()) {
     on<CartStarted>(_onStarted);
     on<CartItemAdded>(_onItemAdded);
     on<CartItemRemoved>(_onItemRemoved);
   }
 
-  final ShoppingRepository shoppingRepository;
+  final PlantRepository plantRepository;
 
   Future<void> _onStarted(CartStarted event, Emitter<CartState> emit) async {
     emit(CartLoading());
     try {
-      final items = await shoppingRepository.loadCartItems();
+      final items = [];
       emit(CartLoaded(cart: Cart(items: [...items])));
     } catch (_) {
       emit(CartError());
@@ -34,7 +35,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final state = this.state;
     if (state is CartLoaded) {
       try {
-        shoppingRepository.addItemToCart(event.item);
+        // plantRepository.addItemToCart(event.item);
         emit(CartLoaded(cart: Cart(items: [...state.cart.items, event.item])));
       } catch (_) {
         emit(CartError());
@@ -46,7 +47,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final state = this.state;
     if (state is CartLoaded) {
       try {
-        shoppingRepository.removeItemFromCart(event.item);
+        // plantRepository.removeItemFromCart(event.item);
         emit(
           CartLoaded(
             cart: Cart(

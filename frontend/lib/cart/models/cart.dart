@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:frontend/catalog/models/item.dart';
+import 'package:frontend/generated/instaplant.pb.dart';
 
 class Cart extends Equatable {
   const Cart({this.items = const <Plant>[]});
@@ -7,7 +7,7 @@ class Cart extends Equatable {
   final List<Plant> items;
 
   double get totalPrice {
-    return items.fold(0, (total, current) => total + current.price);
+    return items.fold(0, (total, current) => total + 0);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/catalog/models/item.dart';
+
+import '../../generated/instaplant.pb.dart';
 
 class PlantPageArguments {
   final Plant plant;

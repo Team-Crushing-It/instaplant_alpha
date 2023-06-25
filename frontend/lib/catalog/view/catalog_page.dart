@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/cart/cart.dart';
+import 'package:frontend/catalog/bloc/catalog_bloc.dart';
 import 'package:frontend/catalog/catalog.dart';
 import 'package:frontend/catalog/view/plant_page.dart';
+import 'package:frontend/generated/instaplant.pb.dart';
 
 class CatalogPage extends StatelessWidget {
   const CatalogPage({super.key});
@@ -25,12 +27,12 @@ class CatalogPage extends StatelessWidget {
       ),
       body: BlocBuilder<CatalogBloc, CatalogState>(
         builder: (context, state) {
-          if (state is CatalogLoading) {
+          if (state.status == CatalogStatus.loading) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (state is CatalogLoaded) {
+          if (state.status == CatalogStatus.loaded) {
             return CategorizedPlantList(
-              items: state.catalog.plants,
+              items: state.plants,
             );
           }
           return const Center(child: Text('Something went wrong!'));
@@ -116,24 +118,10 @@ class CategorizedPlantList extends StatelessWidget {
 }
 
 class PlantListItem extends StatelessWidget {
-  final String id;
-  final String name;
-  final String description;
-  final double price;
-  final SensorUpdate currentSensorUpdate;
-  final List<SensorUpdate> history;
-  final int daysTillHarvest;
-  final DeliveryStatus? status;
+  final Plant plant;
 
   PlantListItem({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.currentSensorUpdate,
-    required this.history,
-    required this.daysTillHarvest,
-    required this.status,
+    required this.plant,
   });
 
   @override
@@ -144,14 +132,15 @@ class PlantListItem extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                currentSensorUpdate.currentPictureUrl,
-                fit: BoxFit.cover,
-                height: 200,
-              ),
-            ),
+            Text(plant.id),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(4),
+            //   child: Image.network(
+            //     plant.latest.pictureUrl,
+            //     fit: BoxFit.cover,
+            //     height: 200,
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -235,7 +224,7 @@ class PlantCard extends StatelessWidget {
                   12.0,
                 ),
                 child: Image.network(
-                  currentSensorUpdate.currentPictureUrl,
+                  currentSensorUpdate.pictureUrl,
                   fit: BoxFit.cover,
                   height: double.infinity,
                   width: double.infinity,

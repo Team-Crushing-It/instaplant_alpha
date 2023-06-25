@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
-import 'package:frontend/catalog/catalog.dart';
+import 'package:frontend/catalog/models/item.dart';
 
 class Catalog extends Equatable {
-  const Catalog({required this.itemNames});
+  const Catalog({required this.plants});
 
-  final List<String> itemNames;
+  final List<Plant> plants;
 
-  Item getById(int id) => Item(id, itemNames[id % itemNames.length]);
+  Plant getById(String id) => plants.firstWhere((plant) => plant.id == id);
 
-  Item getByPosition(int position) => getById(position);
+  Plant getByPosition(int position) => plants[position];
 
   @override
-  List<Object> get props => [itemNames];
+  List<Object> get props => [plants];
 }

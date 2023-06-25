@@ -20,7 +20,7 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
     emit(CatalogLoading());
     try {
       final catalog = await shoppingRepository.loadCatalog();
-      emit(CatalogLoaded(Catalog(itemNames: catalog)));
+      emit(CatalogLoaded(Catalog(plants: catalog)));
     } catch (_) {
       emit(CatalogError());
     }

@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:frontend/catalog/catalog.dart';
+import 'package:frontend/catalog/models/item.dart';
 
 class Cart extends Equatable {
-  const Cart({this.items = const <Item>[]});
+  const Cart({this.items = const <Plant>[]});
 
-  final List<Item> items;
+  final List<Plant> items;
 
-  int get totalPrice {
+  double get totalPrice {
     return items.fold(0, (total, current) => total + current.price);
   }
 

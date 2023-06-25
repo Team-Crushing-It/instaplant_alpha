@@ -23,10 +23,20 @@ class CatalogPage extends StatelessWidget {
               if (state is CatalogLoaded) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (context, index) => CatalogListItem(
-                      state.catalog.getByPosition(index),
-                    ),
-                    childCount: state.catalog.itemNames.length,
+                    (context, index) {
+                      final p = state.catalog.getByPosition(index);
+                      return PlantListItem(
+                        id: p.id,
+                        name: p.name,
+                        description: p.description,
+                        price: p.price,
+                        currentSensorUpdate: p.currentSensorUpdate,
+                        history: p.history,
+                        daysTillHarvest: p.daysTillHarvest,
+                        status: p.status,
+                      );
+                    },
+                    childCount: state.catalog.plants.length,
                   ),
                 );
               }
@@ -42,9 +52,9 @@ class CatalogPage extends StatelessWidget {
 }
 
 class AddButton extends StatelessWidget {
-  const AddButton({required this.item, super.key});
+  const AddButton({required this.plant, super.key});
 
-  final Item item;
+  final Plant plant;
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +65,14 @@ class AddButton extends StatelessWidget {
           return const CircularProgressIndicator();
         }
         if (state is CartLoaded) {
-          final isInCart = state.cart.items.contains(item);
+          final isInCart = state.cart.items.contains(plant);
           return TextButton(
             style: TextButton.styleFrom(
               disabledForegroundColor: theme.primaryColor,
             ),
             onPressed: isInCart
                 ? null
-                : () => context.read<CartBloc>().add(CartItemAdded(item)),
+                : () => context.read<CartBloc>().add(CartItemAdded(plant)),
             child: isInCart
                 ? const Icon(Icons.check, semanticLabel: 'ADDED')
                 : const Text('ADD'),
@@ -82,6 +92,10 @@ class CatalogAppBar extends StatelessWidget {
     return SliverAppBar(
       title: const Text('Catalog'),
       floating: true,
+      leading: IconButton(
+        icon: const Icon(Icons.person),
+        onPressed: () {},
+      ),
       actions: [
         IconButton(
           icon: const Icon(Icons.shopping_cart),
@@ -92,25 +106,42 @@ class CatalogAppBar extends StatelessWidget {
   }
 }
 
-class CatalogListItem extends StatelessWidget {
-  const CatalogListItem(this.item, {super.key});
+class PlantListItem extends StatelessWidget {
+  final String id;
+  final String name;
+  final String description;
+  final double price;
+  final SensorUpdate currentSensorUpdate;
+  final List<SensorUpdate> history;
+  final int daysTillHarvest;
+  final DeliveryStatus? status;
 
-  final Item item;
+  PlantListItem({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.currentSensorUpdate,
+    required this.history,
+    required this.daysTillHarvest,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme.titleLarge;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: LimitedBox(
-        maxHeight: 48,
-        child: Row(
+    return SizedBox(
+      width: 350,
+      child: Card(
+        child: Column(
           children: [
-            AspectRatio(aspectRatio: 1, child: ColoredBox(color: item.color)),
-            const SizedBox(width: 24),
-            Expanded(child: Text(item.name, style: textTheme)),
-            const SizedBox(width: 24),
-            AddButton(item: item),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.network(
+                currentSensorUpdate.currentPictureUrl,
+                fit: BoxFit.cover,
+                height: 200,
+              ),
+            ),
           ],
         ),
       ),

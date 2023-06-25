@@ -1,35 +1,37 @@
 import 'dart:async';
 
-import 'package:frontend/catalog/catalog.dart';
+import 'package:frontend/catalog/models/item.dart';
 
 const _delay = Duration(milliseconds: 800);
 
-const _catalog = [
-  'Code Smell',
-  'Control Flow',
-  'Interpreter',
-  'Recursion',
-  'Sprint',
-  'Heisenbug',
-  'Spaghetti',
-  'Hydra Code',
-  'Off-By-One',
-  'Scope',
-  'Callback',
-  'Closure',
-  'Automata',
-  'Bit Shift',
-  'Currying',
+final _catalog = <Plant>[
+  Plant(
+    id: 'id',
+    name: 'Tomato',
+    description: 'Tomato is a tomato',
+    price: 34,
+    currentSensorUpdate: SensorUpdate(
+      currentHumidity: 0.8,
+      currentTemperature: 20,
+      currentPictureUrl:
+          'https://media.discordapp.net/attachments/1097344348045197466/1122371681936232528/IMG_9087.jpg?width=878&height=1170',
+      currentHydroSense: true,
+      plantId: 'id',
+    ),
+    history: [],
+    daysTillHarvest: 4,
+    status: DeliveryStatus.inTransit,
+  ),
 ];
 
 class ShoppingRepository {
-  final _items = <Item>[];
+  final _items = <Plant>[];
 
-  Future<List<String>> loadCatalog() => Future.delayed(_delay, () => _catalog);
+  Future<List<Plant>> loadCatalog() => Future.delayed(_delay, () => _catalog);
 
-  Future<List<Item>> loadCartItems() => Future.delayed(_delay, () => _items);
+  Future<List<Plant>> loadCartItems() => Future.delayed(_delay, () => _items);
 
-  void addItemToCart(Item item) => _items.add(item);
+  void addItemToCart(Plant item) => _items.add(item);
 
-  void removeItemFromCart(Item item) => _items.remove(item);
+  void removeItemFromCart(Plant item) => _items.remove(item);
 }

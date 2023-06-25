@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+message Plant {
+ string id = 1;
+  string name = 2;
+  SensorUpdate current = 3;
+  repeated SensorUpdate history = 4;
+  int32 daysTillHarvest = 5;
+  enum plantStatus{
+    GROWING = 0;
+    FRUITING = 1;
+    HARVESTING = 2;
+    IN_TRANSIT= 3;
+    DELIVERED = 4;
+   }
+}
+
+message SensorUpdate {
+  int32 sensorID = 1;
+  float humidity = 2;
+  float temperature = 3;
+  bool hydroSense = 4;
+  string pictureUrl = 5;
+}
+
+message ShoppingCart {
+  string id = 1;
+  string userId = 2;
+  float totalPrice = 3;
+  repeated Plant items = 8;
+  }
+
+  message UpdateResponse {
+    string response = 1;
+  }
+
+  message PurchaseResponse {
+    string response = 1;
+  }
+message Empty {}
+
+service InstaplantService {
+    rpc getPlants(Empty) returns (stream Plant){}
+    rpc updatePlant(Plant) returns (UpdateResponse) {}
+    rpc purchase(ShoppingCart) returns (PurchaseResponse) {}
+
+} 
+
+

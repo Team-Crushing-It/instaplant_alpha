@@ -12,8 +12,8 @@ Future<void> main() async {
   // final service = Client.forMainnet();
   // final server = grpc.Server([service]);
 
-  channel = ClientChannel('testnet.mirrornode.hedera.com',
-      port: 443,
+  channel = ClientChannel('100.36.24.141',
+      port: 5600,
       options: const ChannelOptions(
         credentials: ChannelCredentials.secure(),
       ));

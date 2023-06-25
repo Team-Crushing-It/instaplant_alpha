@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+message Plant {
+  string id = 1;
+  string name = 2;
+  SensorUpdate current = 3;
+  repeated SensorUpdate history = 4;
+  int32 daysTillHarvest = 7;
+  string plantStatus = 8;
+}
+
+enum plantStatus{
+  IN_TRANSIT= 0;
+  DELIVERED = 1;
+ }
+
+message SensorUpdate {
+  double plantID = 1;
+  float currentHumidity = 2;
+  float currentTemperature = 3;
+  string currentPictureUrl = 4;
+  bool currentHydroSense = 5;
+
+}

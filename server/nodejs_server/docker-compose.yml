@@ -1,0 +1,17 @@
+version: "3"
+services:
+  node-app:
+    build: .
+    volumes:
+      - ./node-app:/app
+    depends_on:
+      - influxdb
+
+  influxdb:
+    image: influxdb
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_DB=instaplantdb

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/cart/cart.dart';
 import 'package:frontend/catalog/bloc/catalog_bloc.dart';
 import 'package:frontend/catalog/catalog.dart';
@@ -13,30 +14,61 @@ class CatalogPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catalog'),
+        title: Row(
+          children: [
+            const Text('Instaplant'),
+          ],
+        ),
         leading: IconButton(
           icon: const Icon(Icons.person),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () => Navigator.of(context).pushNamed('/cart'),
+            icon: const FaIcon(FontAwesomeIcons.seedling),
+            onPressed: () => Navigator.of(context).pushNamed('/my-plants'),
+          ),
+          IconButton(
+            icon: const Icon(Icons.storefront),
+            onPressed: () => Navigator.of(context).pushNamed('/'),
           ),
         ],
       ),
-      body: BlocBuilder<CatalogBloc, CatalogState>(
-        builder: (context, state) {
-          if (state.status == CatalogStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state.status == CatalogStatus.loaded) {
-            return CategorizedPlantList(
-              items: state.plants,
-            );
-          }
-          return const Center(child: Text('Something went wrong!'));
-        },
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          BlocBuilder<CatalogBloc, CatalogState>(
+            builder: (context, state) {
+              if (state.status == CatalogStatus.loading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state.status == CatalogStatus.loaded) {
+                return CategorizedPlantList(
+                  items: state.plantList.plants,
+                );
+              }
+              return const Center(child: Text('Something went wrong!'));
+            },
+          ),
+          Positioned(
+            bottom: 24.0,
+            right: 24.0,
+            left: 24.0,
+            child: BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                final itemCount =
+                    state is CartLoaded ? state.cart.items.length : 0;
+                return ElevatedButton(
+                    child: itemCount == 0
+                        ? const Text('Cart')
+                        : Text('Cart ($itemCount)'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/cart');
+                    });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -234,7 +266,7 @@ class PlantCard extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.add_shopping_cart),
                         onPressed: () {
-                          // Add your add-to-cart functionality here
+                          context.read<CartBloc>().add(CartItemAdded(plant));
                         },
                       ),
                     ],

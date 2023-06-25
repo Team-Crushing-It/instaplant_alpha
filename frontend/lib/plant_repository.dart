@@ -10,20 +10,21 @@ class PlantRepository {
 
   final PlantApi _plantApi;
 
-  /// Get a stream plants
   Stream<PlantList> getPlants() {
     return _plantApi.getPlants();
   }
 
-  /// add a plant
   Future<AddResponse> addPlant() {
     return _plantApi.addPlant(Plant());
   }
 
 
-  /// purchase
   Future<PurchaseResponse> purchase(ShoppingCart cart) {
     return _plantApi.purchase(cart);
+  }
+
+  Future<UpdateResponse> updatePlant(Plant plant) {
+    return _plantApi.updatePlant(plant);
   }
 }
 

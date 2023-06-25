@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/cart/cart.dart';
 import 'package:frontend/catalog/catalog.dart';
 import 'package:frontend/catalog/view/plant_page.dart';
+import 'package:frontend/my_plants/bloc/bloc.dart';
+import 'package:frontend/my_plants/view/my_plants_page.dart';
 import 'package:frontend/plant_repository.dart';
 
 class App extends StatelessWidget {
@@ -23,10 +25,17 @@ class App extends StatelessWidget {
           create: (_) => CartBloc(
             plantRepository: plantRepository,
           )..add(CartStarted()),
+        ),
+        BlocProvider(
+          create: (_) => MyPlantsBloc()..add(MyPlantsAdded([])),
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Bloc Shopping Cart',
+        title: 'Instaplant',
+        theme: ThemeData.from(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        ),
         initialRoute: '/',
         routes: {
           '/': (_) => const CatalogPage(),
@@ -34,6 +43,7 @@ class App extends StatelessWidget {
           '/plant': (_) {
             return PlantPage();
           },
+          '/my-plants': (_) => const MyPlantsPage(),
         },
       ),
     );

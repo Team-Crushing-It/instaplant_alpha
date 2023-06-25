@@ -7,7 +7,7 @@ class Cart extends Equatable {
   final List<Plant> items;
 
   double get totalPrice {
-    return items.fold(0, (total, current) => total + 0);
+    return items.fold(0, (total, current) => total + current.price);
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:frontend/cart/cart.dart';
-import 'package:frontend/catalog/catalog.dart';
 import 'package:frontend/generated/instaplant.pb.dart';
 import 'package:frontend/plant_repository.dart';
 import 'package:meta/meta.dart';
@@ -29,12 +28,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  Future<void> _onPurchase(CartPurchaseEvent event, Emitter<CartState> emit) async {
+  Future<void> _onPurchase(
+    CartPurchaseEvent event,
+    Emitter<CartState> emit,
+  ) async {
+    if (state is! CartLoaded) {
+      return;
+    }
+    final cart = (state as CartLoaded).cart;
     emit(CartLoading());
     try {
-      final items = [];
-      emit(CartLoaded(cart: Cart(items: [...items])));
-    } catch (_) {
+      plantRepository.purchase(ShoppingCart(items: cart.items));
+      emit(CartLoaded(cart: Cart(items: [])));
+    } catch (e) {
       emit(CartError());
     }
   }

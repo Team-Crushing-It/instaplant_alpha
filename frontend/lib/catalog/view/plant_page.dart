@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/cart/cart.dart';
 
 import '../../generated/instaplant.pb.dart';
 
@@ -115,10 +117,15 @@ class PlantPage extends StatelessWidget {
                         ),
                       ],
                     ), // Replace with your plant price
-                    ElevatedButton(
-                      child: Text('Add to Cart'),
-                      onPressed: () {
-                        // Add your add-to-cart functionality here
+                    BlocBuilder<CartBloc, CartState>(
+                      builder: (context, state) {
+                        return ElevatedButton(
+                          child: Text('Add to Cart'),
+                          onPressed: () {
+                            context.read<CartBloc>().add(CartItemAdded(plant));
+                            Navigator.pop(context);
+                          },
+                        );
                       },
                     ),
                   ],

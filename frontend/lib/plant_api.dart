@@ -32,4 +32,9 @@ class PlantApi {
     final purchaseResponse = await _client.purchase(cart);
     return purchaseResponse;
   }
+
+  Future<UpdateResponse> updatePlant(Plant plant) async {
+    final updateResponse = await _client.updatePlant(plant);
+    return updateResponse;
+  }
 }

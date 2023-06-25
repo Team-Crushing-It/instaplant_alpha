@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/cart/cart.dart';
+import 'package:frontend/my_plants/bloc/bloc.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
@@ -8,16 +8,14 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Cart')),
-      body: const ColoredBox(
-        color: Colors.yellow,
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
+            SizedBox(height: 8),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(32),
-                child: CartList(),
-              ),
+              child: CartList(),
             ),
             Divider(height: 4, color: Colors.black),
             CartTotal()
@@ -33,12 +31,12 @@ class CartList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemNameStyle = Theme.of(context).textTheme.titleLarge;
+    final itemNameStyle = Theme.of(context).textTheme.titleMedium;
 
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         if (state is CartLoading) {
-          return const CircularProgressIndicator();
+          return Center(child: const CircularProgressIndicator());
         }
         if (state is CartLoaded) {
           return ListView.separated(
@@ -46,18 +44,16 @@ class CartList extends StatelessWidget {
             separatorBuilder: (_, __) => const SizedBox(height: 4),
             itemBuilder: (context, index) {
               final item = state.cart.items[index];
-              return Material(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+              return ListTile(
+                leading: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: NetworkImage(item.latest.pictureUrl),
                 ),
-                clipBehavior: Clip.hardEdge,
-                child: ListTile(
-                  leading: const Icon(Icons.done),
-                  title: Text(item.name, style: itemNameStyle),
-                  onLongPress: () {
-                    context.read<CartBloc>().add(CartItemRemoved(item));
-                  },
-                ),
+                title: Text(item.name, style: itemNameStyle),
+                onLongPress: () {
+                  context.read<CartBloc>().add(CartItemRemoved(item));
+                },
+                trailing: Text('\$${item.price}'),
               );
             },
           );
@@ -81,27 +77,42 @@ class CartTotal extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is CartLoading) {
-                  return const CircularProgressIndicator();
+                  return Center(child: const CircularProgressIndicator());
                 }
                 if (state is CartLoaded) {
-                  return Text('\$${state.cart.totalPrice}', style: hugeStyle);
+                  return Center(
+                      child: Text(
+                          '\$${state.cart.totalPrice.toStringAsFixed(2)}',
+                          style: hugeStyle));
                 }
                 return const Text('Something went wrong!');
               },
             ),
-            const SizedBox(width: 24),
-            ElevatedButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Buying not supported yet.')),
-                );
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is CartLoading) {
+                  return Center(child: const CircularProgressIndicator());
+                }
+                if (state is CartLoaded) {
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<CartBloc>().add(CartPurchaseEvent());
+                      context
+                          .read<MyPlantsBloc>()
+                          .add(MyPlantsAdded(state.cart.items));
+
+                      Navigator.of(context).pushNamed('/my-plants');
+                    },
+                    child: const Text('Purchase'),
+                  );
+                }
+                return SizedBox.shrink();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-              child: const Text('BUY'),
             ),
           ],
         ),

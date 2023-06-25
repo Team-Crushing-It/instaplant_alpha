@@ -19,6 +19,12 @@ class PlantRepository {
   Future<AddResponse> addPlant() {
     return _plantApi.addPlant(Plant());
   }
+
+
+  /// purchase
+  Future<PurchaseResponse> purchase(ShoppingCart cart) {
+    return _plantApi.purchase(cart);
+  }
 }
 
 

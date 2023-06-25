@@ -10,6 +10,11 @@ final class CartStarted extends CartEvent {
   List<Object> get props => [];
 }
 
+final class CartPurchaseEvent extends CartEvent {
+  @override
+  List<Object> get props => [];
+}
+
 final class CartItemAdded extends CartEvent {
   const CartItemAdded(this.item);
 

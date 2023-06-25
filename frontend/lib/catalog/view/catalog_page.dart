@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/cart/cart.dart';
+import 'package:frontend/catalog/bloc/catalog_bloc.dart';
 import 'package:frontend/catalog/catalog.dart';
+import 'package:frontend/generated/instaplant.pb.dart';
 
 class CatalogPage extends StatelessWidget {
   const CatalogPage({super.key});
@@ -15,28 +17,18 @@ class CatalogPage extends StatelessWidget {
           const SliverToBoxAdapter(child: SizedBox(height: 12)),
           BlocBuilder<CatalogBloc, CatalogState>(
             builder: (context, state) {
-              if (state is CatalogLoading) {
+              if (state.status == CatalogStatus.loading) {
                 return const SliverFillRemaining(
                   child: Center(child: CircularProgressIndicator()),
                 );
               }
-              if (state is CatalogLoaded) {
+              if (state.status == CatalogStatus.loaded) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final p = state.catalog.getByPosition(index);
-                      return PlantListItem(
-                        id: p.id,
-                        name: p.name,
-                        description: p.description,
-                        price: p.price,
-                        currentSensorUpdate: p.currentSensorUpdate,
-                        history: p.history,
-                        daysTillHarvest: p.daysTillHarvest,
-                        status: p.status,
-                      );
+                      return PlantListItem(plant: state.plants[index]);
                     },
-                    childCount: state.catalog.plants.length,
+                    childCount: state.plants.length,
                   ),
                 );
               }
@@ -107,24 +99,10 @@ class CatalogAppBar extends StatelessWidget {
 }
 
 class PlantListItem extends StatelessWidget {
-  final String id;
-  final String name;
-  final String description;
-  final double price;
-  final SensorUpdate currentSensorUpdate;
-  final List<SensorUpdate> history;
-  final int daysTillHarvest;
-  final DeliveryStatus? status;
+  final Plant plant;
 
   PlantListItem({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.currentSensorUpdate,
-    required this.history,
-    required this.daysTillHarvest,
-    required this.status,
+    required this.plant,
   });
 
   @override
@@ -134,14 +112,15 @@ class PlantListItem extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                currentSensorUpdate.currentPictureUrl,
-                fit: BoxFit.cover,
-                height: 200,
-              ),
-            ),
+            Text(plant.id),
+            // ClipRRect(
+            //   borderRadius: BorderRadius.circular(4),
+            //   child: Image.network(
+            //     plant.latest.pictureUrl,
+            //     fit: BoxFit.cover,
+            //     height: 200,
+            //   ),
+            // ),
           ],
         ),
       ),

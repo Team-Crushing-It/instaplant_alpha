@@ -5,7 +5,7 @@ message Plant {
   string name = 2;
   string ownerId = 3;
   plantStatus status  = 4;
-  int32 daysTillHarvest = 5;
+  string category = 5;
   SensorUpdate latest = 6;
   repeated SensorUpdate history = 7;
 }

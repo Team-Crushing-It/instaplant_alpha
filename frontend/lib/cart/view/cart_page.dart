@@ -109,6 +109,12 @@ class CartTotal extends StatelessWidget {
                           .add(MyPlantsAdded(state.cart.items));
 
                       Navigator.of(context).pushNamed('/my-plants');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Purchase successful!'),
+                          duration: const Duration(seconds: 3),
+                        ),
+                      );
                     },
                     child: const Text('Purchase'),
                   );

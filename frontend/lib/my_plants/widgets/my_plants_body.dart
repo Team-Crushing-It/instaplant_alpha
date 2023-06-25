@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:frontend/catalog/view/catalog_page.dart';
 import 'package:frontend/catalog/view/plant_page.dart';
 import 'package:frontend/my_plants/bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,9 +13,22 @@ import '../../generated/instaplant.pb.dart';
 ///
 /// Add what it does
 /// {@endtemplate}
-class MyPlantsBody extends StatelessWidget {
+class MyPlantsBody extends StatefulWidget {
   /// {@macro my_plants_body}
   const MyPlantsBody({super.key});
+
+  @override
+  State<MyPlantsBody> createState() => _MyPlantsBodyState();
+}
+
+class _MyPlantsBodyState extends State<MyPlantsBody> {
+  late final CarouselController _controller;
+  bool loading = false;
+  @override
+  void initState() {
+    _controller = CarouselController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +41,41 @@ class MyPlantsBody extends StatelessWidget {
         final plants = (state as MyPlantsLoaded).plants;
 
         return Scaffold(
-          body: MyPlantsCarousel(
-            plants: plants,
+          appBar: AppBar(
+            title: Text('My plants'),
+            leading: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {},
+            ),
+            actions: [
+              IconButton(
+                icon: const FaIcon(FontAwesomeIcons.seedling),
+                onPressed: () => Navigator.of(context).pushNamed('/my-plants'),
+              ),
+              IconButton(
+                icon: const Icon(Icons.storefront),
+                onPressed: () => Navigator.of(context).pushNamed('/'),
+              ),
+            ],
+          ),
+          body: Stack(
+            children: [
+              MyPlantsCarousel(
+                controller: _controller,
+                plants: plants,
+              ),
+              if (loading)
+                Container(
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: FloatingActionButton.extended(
+            label: Text('Add plant'),
             onPressed: () async {
               try {
                 await ImagePicker().pickImage(source: ImageSource.camera);
@@ -41,24 +85,33 @@ class MyPlantsBody extends StatelessWidget {
               context.read<MyPlantsBloc>().add(
                     MyPlantsAdded([
                       Plant(
-                        id: '9',
-                        name: 'Lettuce',
-                        price: 10.99,
-                        category: 'Vegetables',
+                        id: '1',
+                        name: 'Lion\'s mane 2',
+                        price: 23.99,
+                        category: 'Mushrooms',
                         latest: SensorUpdate(
-                          humidity: 0.95, // lettuce prefers high humidity
+                          humidity:
+                              0.95, // typically, lion's mane mushrooms prefer very high humidity
                           temperature:
-                              18, // they prefer cooler temperatures in the range of 15-20 degrees Celsius
+                              24, // they prefer temperatures in the range of 21-24 degrees Celsius
                           hydroSense: true,
                           pictureUrl:
-                              'https://assets.stickpng.com/images/585ea50dcb11b227491c3526.png',
-                          sensorID: 9,
+                              'https://media.discordapp.net/attachments/1097344348045197466/1122562961664381070/image.png?width=762&height=1022',
+                          sensorID: 1,
                         ),
                       ),
                     ]),
                   );
+              setState(() {
+                loading = true;
+              });
+              await Future.delayed(const Duration(milliseconds: 500), () {});
+              _controller.jumpToPage(plants.length - 1);
+              setState(() {
+                loading = false;
+              });
             },
-            child: const Icon(Icons.qr_code_scanner),
+            icon: const Icon(Icons.qr_code_scanner),
           ),
         );
       },
@@ -68,8 +121,9 @@ class MyPlantsBody extends StatelessWidget {
 
 class MyPlantsCarousel extends StatefulWidget {
   final List<Plant> plants;
+  final CarouselController controller;
 
-  MyPlantsCarousel({required this.plants});
+  MyPlantsCarousel({required this.plants, required this.controller});
 
   @override
   _MyPlantsCarouselState createState() => _MyPlantsCarouselState();
@@ -77,13 +131,6 @@ class MyPlantsCarousel extends StatefulWidget {
 
 class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
   int _current = 0;
-  late final CarouselController _controller;
-
-  @override
-  void initState() {
-    _controller = CarouselController();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +141,7 @@ class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
           alignment: Alignment.center,
           children: [
             CarouselSlider(
-              carouselController: _controller,
+              carouselController: widget.controller,
               items: widget.plants.map((item) {
                 return Builder(
                   builder: (BuildContext context) {
@@ -110,7 +157,7 @@ class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
                         Image.network(
                           item.latest.pictureUrl,
                           width: 300,
-                          height: 300,
+                          height: 290,
                         ),
                         SizedBox(
                           height: 32.0,
@@ -155,7 +202,7 @@ class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
               }).toList(),
               options: CarouselOptions(
                 enableInfiniteScroll: true,
-                height: MediaQuery.of(context).size.height * 0.9,
+                height: MediaQuery.of(context).size.height * 0.85,
                 viewportFraction: 1.0,
                 enlargeCenterPage: false,
                 onPageChanged: (index, reason) {
@@ -172,7 +219,7 @@ class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
               child: IconButton(
                 icon: Icon(Icons.arrow_back_ios),
                 onPressed: () {
-                  _controller.previousPage();
+                  widget.controller.previousPage();
                 },
               ),
             ),
@@ -183,7 +230,7 @@ class _MyPlantsCarouselState extends State<MyPlantsCarousel> {
               child: IconButton(
                 icon: Icon(Icons.arrow_forward_ios),
                 onPressed: () {
-                  _controller.nextPage();
+                  widget.controller.nextPage();
                 },
               ),
             ),

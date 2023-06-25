@@ -4,7 +4,7 @@ final plants = [
   // Mushrooms
   Plant(
     id: '1',
-    name: 'Lion\'s mane',
+    name: 'Lion\'s mane 2',
     price: 23.99,
     category: 'Mushrooms',
     latest: SensorUpdate(

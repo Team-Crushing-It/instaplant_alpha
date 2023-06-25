@@ -31,6 +31,7 @@ class App extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Instaplant',
         theme: ThemeData.from(
           useMaterial3: true,
